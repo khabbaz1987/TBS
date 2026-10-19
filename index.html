@@ -15,6 +15,96 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
+	/* Couleurs institutionnelles officielles */
+:root {
+    --rouge-maroc: #C1272D;
+    --vert-maroc: #006233;
+    --texte-sombre: #2c3e50;
+}
+/* Bandeau tricolore/bicolore fixé en haut de page */
+body::before {
+    content: "";
+    display: block;
+    height: 5px;
+    width: 100%;
+    background: linear-gradient(90deg, var(--rouge-maroc) 0% 50%, var(--vert-maroc) 50% 100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+}
+
+/* Décalage du corps de page pour ne pas chevaucher la bande */
+body {
+    margin-top: 5px;
+}
+/* En-tête institutionnel */
+.header-section {
+    margin-bottom: 30px;
+    padding: 25px 20px;
+    text-align: center;
+    background-color: #ffffff;
+    border-bottom: 3px solid var(--vert-maroc); /* Rappel Vert institutionnel */
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.header-section h1 {
+    color: var(--texte-sombre);
+    font-size: 1.8rem;
+    margin-top: 15px;
+}
+
+/* Zone de dépôt du fichier Excel */
+input[type="file"] {
+    margin: 20px auto;
+    padding: 15px;
+    border: 2px dashed var(--rouge-maroc); /* Bordure pointillée Rouge officiel */
+    background-color: rgba(193, 39, 45, 0.02);
+    border-radius: 8px;
+    display: block;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+input[type="file"]:hover {
+    background-color: rgba(193, 39, 45, 0.06);
+    border-color: var(--rouge-maroc);
+}
+	/* Style de la zone d'en-tête */
+.header-section {
+    margin-bottom: 30px;
+    text-align: center;
+    border-bottom: 2px solid #eef2f5;
+    padding-bottom: 20px;
+}
+
+/* Style spécifique pour le logo */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+#logo-men {
+    max-width: 320px; /* Taille optimale pour ordinateur */
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Adaptation pour les téléphones portables (Responsiveness) */
+@media (max-width: 600px) {
+    #logo-men {
+        max-width: 80% !important; /* Rétrécit le logo sur petit écran */
+    }
+    
+    .header-section h1 {
+        font-size: 1.5rem; /* Ajuste la taille du titre */
+    }
+}
         /* Styles généraux et réinitialisation */
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
@@ -224,12 +314,32 @@
     <div class="container">
         <!-- Section d'en-tête et chargement -->
         <div class="header-section">
-            <h1>📊 Tableau de Bord Stratégique (TBS)</h1>
-            <p>Chargez un export Excel (.xlsx) pour analyser et visualiser les données instantanément.</p>
-            
-            <div class="upload-area">
-                <input type="file" id="upload_excel" accept=".xlsx, .xls" />
-            </div>
+    <!-- Conteneur pour le logo officiel -->
+    <div class="logo-container">
+        <!-- Vous pouvez remplacer ce lien par "logo.png" si vous avez le fichier dans votre dossier -->
+        <img src="C:\Users\khabb\Desktop\TBS V2\icon-192.png" 
+             alt="Logo DIRECTION PROVINCIAL AIN CHOCK" 
+             id="logo-men" 
+             onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='block';">
+        
+        <!-- Fallback au cas où l'image ne charge pas (pas d'internet ou fichier manquant) -->
+        <div id="logo-fallback" style="display: none; font-weight: bold; color: #2c3e50; font-size: 1.2rem; border-bottom: 2px solid #007bff; padding-bottom: 10px; margin-bottom: 15px;">
+            🇲🇦 ROYAUME DU MAROC <br>
+            <span style="font-size: 0.95rem; color: #555;">Direction provinciale AIN CHOCK</span>
+        </div>
+    </div>
+	<h1>
+    <img src="https://flagcdn.com/w40/ma.png" 
+         alt="Drapeau du Maroc" 
+         style="height: 28px; vertical-align: sub; margin-right: 8px; border-radius: 3px; box-shadow: 0 1px 3px rgba(0,0,0,0.2);">
+    Tableau de Bord Stratégique (TBS) - AIN CHOCK
+</h1>
+
+    <h1>📊 </h1>
+    <p>Chargez un export Excel pour visualiser les indicateurs instantanément.</p>
+    
+    <input type="file" id="upload_excel" accept=".xlsx, .xls" />
+</div>
         </div>
         
         <!-- Zone de contrôle (Menu déroulant dynamique) -->
