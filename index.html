@@ -15,6 +15,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
+	
 	/* Couleurs institutionnelles officielles */
 :root {
     --rouge-maroc: #C1272D;
@@ -307,6 +308,86 @@ input[type="file"]:hover {
     font-weight: bold;
     cursor: pointer;
 }
+/* Style du bouton d'impression sur l'écran */
+.btn-print {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+.btn-print:hover {
+    background-color: #219150;
+}
+
+/* ==========================================
+   RÈGLES D'IMPRESSION (PAPIER / PDF)
+   ========================================== */
+@media print {
+    /* 1. Masquer les menus, boutons, champs de fichier et bannières PWA */
+    input[type="file"],
+    #zone_controles,
+    .btn-imprimer-container,
+    .install-banner,
+    .modal-overlay {
+        display: none !important;
+    }
+
+    /* 2. Optimiser la page pour l'impression */
+    body {
+        background: white !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    body::before {
+        display: none !important; /* Masquer la ligne bicolore supérieure */
+    }
+
+    .container {
+        box-shadow: none !important;
+        padding: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* 3. Déplier entièrement le tableau (supprimer la barre de défilement) */
+    .table-wrapper {
+        max-height: none !important;
+        overflow: visible !important;
+        border: none !important;
+    }
+
+    /* 4. Gestion des sauts de page pour le graphique */
+    .chart-container {
+        max-width: 100% !important;
+        page-break-inside: avoid; /* Évite de couper le graphique au milieu */
+        margin-bottom: 30px !important;
+    }
+
+    table {
+        width: 100% !important;
+        font-size: 10pt !important;
+        border-collapse: collapse !important;
+    }
+
+    th, td {
+        border: 1px solid #444 !important;
+        padding: 6px 8px !important;
+    }
+
+    th {
+        background-color: #2c3e50 !important;
+        color: white !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}
     </style>
 </head>
 <body>
@@ -590,6 +671,14 @@ input[type="file"]:hover {
             .catch(erreur => console.log('Erreur Service Worker', erreur));
         });
     }
+	document.addEventListener('DOMContentLoaded', () => {
+    const btnImprimer = document.getElementById('btn-imprimer');
+    if (btnImprimer) {
+        btnImprimer.addEventListener('click', () => {
+            window.print();
+        });
+    }
+});
 </script>
 <script>
 let deferredPrompt = null;
@@ -668,6 +757,21 @@ document.addEventListener('DOMContentLoaded', () => {
         </ol>
         <button id="btn-compris" class="btn-primary">J'ai compris</button>
     </div>
+</div>
+<!-- Pied de page institutionnel -->
+<footer class="footer-institutionnel">
+    <div class="footer-content"><center><b>
+        <p class="footer-title">🇲🇦 Royaume du Maroc — Ministère de l'Éducation Nationale, du Préscolaire et des Sports</p>
+        <p class="footer-sub">Direction de la Stratégie, DIRECTION PROVINCIAL AIN CHOCK — Système TBS</p>
+        <p class="footer-date">📅 Date de consultation : <span id="date-courante">---</span></p>
+        <p class="footer-copy">&copy; <span id="annee-courante">2026</span> — Application d'Analyse Stratégique. Données traitées localement.</p>
+    </div>
+</footer>
+<!-- Bouton d'impression -->
+<div class="btn-imprimer-container" style="text-align: center; margin: 25px 0;">
+    <button id="btn-imprimer" class="btn-print">
+        🖨️ Imprimer / Exporter le Rapport PDF
+    </button>
 </div>
 </body>
 </html>
